@@ -1,5 +1,5 @@
 
-// import { getAccessToken, getApiVersion, requestGet } from "../utils/utils";
+import { getAccessToken, getApiVersion } from "../utils/utils";
 import { IUser, LexioRequest } from "../index";
 // import { getServiceHost } from "../serviceRegistry";
 
@@ -11,9 +11,10 @@ import { IUser, LexioRequest } from "../index";
  */
 export async function getUsers(req: LexioRequest | undefined, ids: Array<string>): Promise<Array<IUser>> {
 
+
+  const apiVersion: string = getApiVersion(req);
+  const accessToken: string = getAccessToken(req);
   return [];
-  // const apiVersion: string = getApiVersion(req);
-  // const accessToken: string = getAccessToken(req);
   //
   // const serviceHost: string = getServiceHost(apiVersion, 'lexio-authentication');
   //

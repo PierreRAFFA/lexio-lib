@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = require("../utils/utils");
 // import { getServiceHost } from "../serviceRegistry";
 /**
  *
@@ -44,7 +45,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function getUsers(req, ids) {
     return __awaiter(this, void 0, void 0, function () {
+        var apiVersion, accessToken;
         return __generator(this, function (_a) {
+            apiVersion = utils_1.getApiVersion(req);
+            accessToken = utils_1.getAccessToken(req);
             return [2 /*return*/, []];
         });
     });
