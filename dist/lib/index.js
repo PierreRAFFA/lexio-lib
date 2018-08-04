@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import "core-js/fn/array.find"
 // ...
 var authentication_1 = require("./services/authentication");
+var game_1 = require("./services/game");
 exports.LATEST_API_VERSION = '5.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
@@ -73,6 +74,26 @@ var Lexio = /** @class */ (function () {
                     case 2:
                         e_1 = _a.sent();
                         throw e_1;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
+     */
+    Lexio.prototype.postGame = function (game) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, game_1.postGame(this._originalReq, game)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_2 = _a.sent();
+                        throw e_2;
                     case 3: return [2 /*return*/];
                 }
             });

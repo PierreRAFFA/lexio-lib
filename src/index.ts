@@ -3,6 +3,7 @@
   // ...
 import { getUsers } from "./services/authentication";
 import { Request } from "express";
+import { postGame } from "./services/game";
 
 export const LATEST_API_VERSION = '5.0';
 
@@ -39,9 +40,27 @@ class Lexio {
       throw e;
     }
   }
+
+  /**
+   *
+   */
+  public async postGame(game: IGame): Promise<IGame> {
+    try {
+      return await postGame(this._originalReq, game);
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 const lexio: Lexio = new Lexio();
 export { lexio };
+
+
+
+
+
+
+
 
 export interface LexioRequest extends Request {
   user: {
@@ -69,4 +88,15 @@ export interface IUser {
   identities: object;
   created: string;
   firebaseToken: string;
+}
+
+export interface IGame {
+  id: string;
+  language: string;
+  userId: string;
+  user?: object;
+  score: number;
+  statistics: object;
+  created: string;
+  serverDate?: string;
 }

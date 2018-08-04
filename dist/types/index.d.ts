@@ -18,6 +18,10 @@ declare class Lexio {
      * @returns {Promise<Array<IUser>>}
      */
     getUsers(ids: Array<string>): Promise<Array<IUser>>;
+    /**
+     *
+     */
+    postGame(game: IGame): Promise<IGame>;
 }
 declare const lexio: Lexio;
 export { lexio };
@@ -43,4 +47,14 @@ export interface IUser {
     identities: object;
     created: string;
     firebaseToken: string;
+}
+export interface IGame {
+    id: string;
+    language: string;
+    userId: string;
+    user?: object;
+    score: number;
+    statistics: object;
+    created: string;
+    serverDate?: string;
 }

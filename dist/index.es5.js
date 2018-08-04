@@ -57571,7 +57571,6 @@ Object.defineProperty(request$4, 'debug', {
   }
 });
 
-var LATEST_API_VERSION = '1.0';
 /**
  *
  * @param {LexioRequest} req
@@ -57599,18 +57598,42 @@ function requestGet(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        console.dir(options, { depth: undefined });
                         return [2 /*return*/, undefined(options, function (error, response, body) {
-                                var statusCode = lodash_8(response, 'statusCode') || 500;
                                 if (error) {
                                     reject(error);
                                 }
                                 else {
                                     try {
-                                        console.log('=====');
-                                        console.log(body);
-                                        console.log('=====');
-                                        // const result: T = body;
+                                        resolve(body);
+                                    }
+                                    catch (parsingError) {
+                                        console.error(body);
+                                        reject(parsingError);
+                                    }
+                                }
+                            })];
+                    });
+                }); })];
+        });
+    });
+}
+/**
+ *
+ * @param options
+ * @returns {Promise<T>}
+ */
+function requestPost(options) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        return [2 /*return*/, undefined(options, function (error, response, body) {
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    try {
                                         resolve(body);
                                     }
                                     catch (parsingError) {
@@ -57682,7 +57705,40 @@ function getUsers(req, ids) {
     });
 }
 
-var LATEST_API_VERSION$1 = '5.0';
+/**
+ *
+ * @param {Array<string>} ids
+ * @param {string} apiVersion
+ * @returns {Promise<Array<IUser>>}
+ */
+function postGame(req, game) {
+    return __awaiter(this, void 0, void 0, function () {
+        var apiVersion, accessToken, serviceHost, uri, options;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    apiVersion = getApiVersion(req);
+                    accessToken = getAccessToken(req);
+                    serviceHost = getServiceHost(apiVersion, 'lexio-game');
+                    uri = serviceHost + "/api/games";
+                    options = {
+                        uri: uri,
+                        qs: {
+                            access_token: accessToken,
+                        },
+                        headers: {
+                            'ApiVersion': apiVersion
+                        },
+                        json: true // Automatically parses the JSON string in the response
+                    };
+                    return [4 /*yield*/, requestPost(options)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+
+var LATEST_API_VERSION = '5.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
         /**
@@ -57721,9 +57777,29 @@ var Lexio = /** @class */ (function () {
             });
         });
     };
+    /**
+     *
+     */
+    Lexio.prototype.postGame = function (game) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, postGame(this._originalReq, game)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_2 = _a.sent();
+                        throw e_2;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return Lexio;
 }());
 var lexio = new Lexio();
 
-export { LATEST_API_VERSION$1 as LATEST_API_VERSION, lexio };
+export { LATEST_API_VERSION, lexio };
 //# sourceMappingURL=index.es5.js.map

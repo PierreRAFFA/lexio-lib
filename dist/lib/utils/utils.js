@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var request = require("request");
-var LATEST_API_VERSION = '1.0';
+var index_1 = require("../index");
 function error(message, statusCode) {
     var error = new Error(message);
     error.statusCode = statusCode;
@@ -50,7 +50,7 @@ exports.error = error;
  * @returns {string}
  */
 function getApiVersion(req) {
-    return lodash_1.get(req, 'headers.apiversion') || LATEST_API_VERSION;
+    return lodash_1.get(req, 'headers.apiversion') || index_1.LATEST_API_VERSION;
 }
 exports.getApiVersion = getApiVersion;
 /**
@@ -89,18 +89,12 @@ function requestGet(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        console.dir(options, { depth: undefined });
                         return [2 /*return*/, request.get(options, function (error, response, body) {
-                                var statusCode = lodash_1.get(response, 'statusCode') || 500;
                                 if (error) {
                                     reject(error);
                                 }
                                 else {
                                     try {
-                                        console.log('=====');
-                                        console.log(body);
-                                        console.log('=====');
-                                        // const result: T = body;
                                         resolve(body);
                                     }
                                     catch (parsingError) {
@@ -115,4 +109,35 @@ function requestGet(options) {
     });
 }
 exports.requestGet = requestGet;
+/**
+ *
+ * @param options
+ * @returns {Promise<T>}
+ */
+function requestPost(options) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        return [2 /*return*/, request.post(options, function (error, response, body) {
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    try {
+                                        resolve(body);
+                                    }
+                                    catch (parsingError) {
+                                        console.error(body);
+                                        reject(parsingError);
+                                    }
+                                }
+                            })];
+                    });
+                }); })];
+        });
+    });
+}
+exports.requestPost = requestPost;
 //# sourceMappingURL=utils.js.map
