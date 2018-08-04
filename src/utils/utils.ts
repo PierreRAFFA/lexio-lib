@@ -55,13 +55,16 @@ export function getJwt(req: LexioRequest): string {
 export async function requestGet<T>(options: any): Promise<T> {
   return new Promise<T>(async (resolve, reject) => {
     console.dir(options, { depth: undefined});
-    
+
     return request.get(options, (error: any, response: Response, body: any): void => {
       const statusCode = get(response, 'statusCode') || 500;
       if (error) {
         reject(error);
       } else {
         try {
+          console.log('=====');
+          console.log(body);
+          console.log('=====');
           const result: T = JSON.parse(body);
           resolve(result);
         } catch (parsingError) {
