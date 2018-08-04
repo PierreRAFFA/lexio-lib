@@ -1,7 +1,7 @@
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
   // import "core-js/fn/array.find"
   // ...
-import { getUsers } from "./services/authentication";
+// import { getUsers } from "./services/authentication";
 import { Request } from "express";
 
 export const LATEST_API_VERSION = '5.0';
@@ -26,19 +26,19 @@ export default class Lexio {
     return this;
   }
 
-  /**
-   *
-   * @param {Array<string>} ids
-   * @param {string} apiVersion
-   * @returns {Promise<Array<IUser>>}
-   */
-  public async getUsers(ids: Array<string>): Promise<Array<IUser>> {
-    try {
-      return await getUsers(this._originalReq, ids);
-    } catch (e) {
-      throw e;
-    }
-  }
+  // /**
+  //  *
+  //  * @param {Array<string>} ids
+  //  * @param {string} apiVersion
+  //  * @returns {Promise<Array<IUser>>}
+  //  */
+  // public async getUsers(ids: Array<string>): Promise<Array<IUser>> {
+  //   try {
+  //     return await getUsers(this._originalReq, ids);
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
 }
 
 export interface LexioRequest extends Request {
