@@ -57599,6 +57599,7 @@ function requestGet(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
+                        console.dir(options, { depth: undefined });
                         return [2 /*return*/, undefined(options, function (error, response, body) {
                                 var statusCode = lodash_8(response, 'statusCode') || 500;
                                 if (error) {

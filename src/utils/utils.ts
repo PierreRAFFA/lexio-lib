@@ -54,6 +54,8 @@ export function getJwt(req: LexioRequest): string {
  */
 export async function requestGet<T>(options: any): Promise<T> {
   return new Promise<T>(async (resolve, reject) => {
+    console.dir(options, { depth: undefined});
+    
     return request.get(options, (error: any, response: Response, body: any): void => {
       const statusCode = get(response, 'statusCode') || 500;
       if (error) {
