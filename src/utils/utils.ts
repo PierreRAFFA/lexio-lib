@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import request from "request";
+import request, { Response } from "request";
 import { LexioError, LexioRequest } from "../index";
 
 const LATEST_API_VERSION = '1.0';
@@ -51,9 +51,10 @@ export function getJwt(req: LexioRequest): string {
  * @param options
  * @returns {Promise<any>}
  */
-export async function requestGet(options: any): Promise<any> {
+export async function requestPromise(options: any): Promise<any> {
   return new Promise<any>(async (resolve, reject) => {
-    return request.get(options, (error: any, response: request.Response, body: any): void => {
+    request.get;
+    // return request.get(options, (error: any, response: Response, body: any): void => {
     //   const statusCode = get(response, 'statusCode') || 500;
     //   if (error) {
     //     reject(error);
@@ -65,6 +66,6 @@ export async function requestGet(options: any): Promise<any> {
     //       reject(parsingError);
     //     }
     //   }
-    });
+    // });
   });
 }

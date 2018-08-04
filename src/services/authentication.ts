@@ -34,6 +34,6 @@ export async function getUsers(req: LexioRequest | undefined, ids: Array<string>
   //   json: true // Automatically parses the JSON string in the response
   // };
   //
-  // return await requestGet<Array<IUser>>(options);
+  // return await requestPromise<Array<IUser>>(options);
 }
 

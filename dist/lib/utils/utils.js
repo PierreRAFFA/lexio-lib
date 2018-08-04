@@ -83,29 +83,18 @@ exports.getJwt = getJwt;
  * @param options
  * @returns {Promise<any>}
  */
-function requestGet(options) {
+function requestPromise(options) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        return [2 /*return*/, request_1.default.get(options, function (error, response, body) {
-                                //   const statusCode = get(response, 'statusCode') || 500;
-                                //   if (error) {
-                                //     reject(error);
-                                //   } else {
-                                //     try {
-                                //       const result: any = JSON.parse(body);
-                                //       resolve(result);
-                                //     } catch (parsingError) {
-                                //       reject(parsingError);
-                                //     }
-                                //   }
-                            })];
+                        request_1.default.get;
+                        return [2 /*return*/];
                     });
                 }); })];
         });
     });
 }
-exports.requestGet = requestGet;
+exports.requestPromise = requestPromise;
 //# sourceMappingURL=utils.js.map
