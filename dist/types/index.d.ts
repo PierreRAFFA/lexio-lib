@@ -12,7 +12,8 @@ export default class Lexio {
      */
     fromReq(req: LexioRequest): Lexio;
 }
-export declare const lexio: Lexio;
+declare const lexio: Lexio;
+export { lexio };
 export interface LexioRequest extends Request {
     user: {
         accessToken: string;

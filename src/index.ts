@@ -40,8 +40,8 @@ export default class Lexio {
   //   }
   // }
 }
-
-export const lexio: Lexio = new Lexio();
+const lexio: Lexio = new Lexio();
+export { lexio };
 
 export interface LexioRequest extends Request {
   user: {
