@@ -1,6 +1,7 @@
 import { get } from 'lodash';
-import request, { Response } from "request";
+import * as request from "request";
 import { LexioError, LexioRequest } from "../index";
+import { Response } from "request";
 
 const LATEST_API_VERSION = '1.0';
 
