@@ -1,6 +1,24 @@
 import { get } from 'lodash';
-import { config } from "./config";
+
+const CONFIG: any = {
+  '0.1': {
+    'lexio-authentication': 'http://lexio-authentication:3010',
+    'lexio-user': 'http://lexio-authentication:3010',
+    'lexio-game': 'http://lexio-game:3010',
+    'lexio-purchase': 'http://lexio-purchase:3010',
+    'lexio-notification': 'http://lexio-notification:3010',
+    'lexio-social': 'http://lexio-social:3010'
+  },
+  '1.0': {
+    'lexio-authentication': 'http://lexio-authentication:3010',
+    'lexio-user': 'http://lexio-authentication:3010',
+    'lexio-game': 'http://lexio-game2:3000',  // <=================== lexio-game2
+    'lexio-purchase': 'http://lexio-purchase:3010',
+    'lexio-notification': 'http://lexio-notification:3010',
+    'lexio-social': 'http://lexio-social:3010',
+  }
+};
 
 export function getServiceHost(apiVersion: string, serviceName: string): string {
-  return get(config, `[${apiVersion}][${serviceName}]`);
+  return get(CONFIG, `[${apiVersion}][${serviceName}]`);
 }

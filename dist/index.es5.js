@@ -57624,7 +57624,7 @@ function requestGet(options) {
     });
 }
 
-var config = {
+var CONFIG = {
     '0.1': {
         'lexio-authentication': 'http://lexio-authentication:3010',
         'lexio-user': 'http://lexio-authentication:3010',
@@ -57642,9 +57642,8 @@ var config = {
         'lexio-social': 'http://lexio-social:3010',
     }
 };
-
 function getServiceHost(apiVersion, serviceName) {
-    return lodash_8(config, "[" + apiVersion + "][" + serviceName + "]");
+    return lodash_8(CONFIG, "[" + apiVersion + "][" + serviceName + "]");
 }
 
 /**
