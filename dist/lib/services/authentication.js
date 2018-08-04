@@ -35,8 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var utils_1 = require("../utils/utils");
-var serviceRegistry_1 = require("../serviceRegistry");
+// import { getServiceHost } from "../serviceRegistry";
 /**
  *
  * @param {Array<string>} ids
@@ -45,29 +44,8 @@ var serviceRegistry_1 = require("../serviceRegistry");
  */
 function getUsers(req, ids) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiVersion, accessToken, serviceHost, filters, uri, options;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    apiVersion = utils_1.getApiVersion(req);
-                    accessToken = utils_1.getAccessToken(req);
-                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-authentication');
-                    filters = { where: { id: { inq: ids } } };
-                    uri = serviceHost + "/api/users?access_token=" + accessToken + "&filters=" + JSON.stringify(filters);
-                    options = {
-                        uri: uri,
-                        qs: {
-                            access_token: accessToken,
-                            filters: JSON.stringify(filters),
-                        },
-                        headers: {
-                            'ApiVersion': req
-                        },
-                        json: true // Automatically parses the JSON string in the response
-                    };
-                    return [4 /*yield*/, utils_1.requestGet(options)];
-                case 1: return [2 /*return*/, _a.sent()];
-            }
+            return [2 /*return*/, []];
         });
     });
 }
