@@ -57692,7 +57692,7 @@
         });
     }
 
-    var LATEST_API_VERSION$1 = '4.0';
+    var LATEST_API_VERSION$1 = '5.0';
     var Lexio = /** @class */ (function () {
         function Lexio() {
             /**
@@ -57735,7 +57735,7 @@
     }());
 
     exports.LATEST_API_VERSION = LATEST_API_VERSION$1;
-    exports.Lexio = Lexio;
+    exports.default = Lexio;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

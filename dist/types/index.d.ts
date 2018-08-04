@@ -1,6 +1,6 @@
 import { Request } from "express";
-export declare const LATEST_API_VERSION = "4.0";
-export declare class Lexio {
+export declare const LATEST_API_VERSION = "5.0";
+export default class Lexio {
     /**
      *
      */

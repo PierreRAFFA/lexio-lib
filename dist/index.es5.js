@@ -57686,7 +57686,7 @@ function getUsers(req, ids) {
     });
 }
 
-var LATEST_API_VERSION$1 = '4.0';
+var LATEST_API_VERSION$1 = '5.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
         /**
@@ -57728,5 +57728,6 @@ var Lexio = /** @class */ (function () {
     return Lexio;
 }());
 
-export { LATEST_API_VERSION$1 as LATEST_API_VERSION, Lexio };
+export default Lexio;
+export { LATEST_API_VERSION$1 as LATEST_API_VERSION };
 //# sourceMappingURL=index.es5.js.map

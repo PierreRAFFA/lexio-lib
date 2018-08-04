@@ -4,9 +4,9 @@
 import { getUsers } from "./services/authentication";
 import { Request } from "express";
 
-export const LATEST_API_VERSION = '4.0';
+export const LATEST_API_VERSION = '5.0';
 
-export class Lexio {
+export default class Lexio {
 
   /**
    *
