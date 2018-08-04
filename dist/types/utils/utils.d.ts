@@ -18,9 +18,3 @@ export declare function getAccessToken(req: LexioRequest | undefined): string;
  * @returns {string}
  */
 export declare function getJwt(req: LexioRequest): string;
-/**
- *
- * @param options
- * @returns {Promise<T>}
- */
-export declare function requestGet<T>(options: any): Promise<T>;
