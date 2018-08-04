@@ -56,7 +56,7 @@ export async function requestGet<T>(options: any): Promise<T> {
   return new Promise<T>(async (resolve, reject) => {
     console.dir(options, { depth: undefined});
 
-    return request.get(options, (error: any, response: Response, body: any): void => {
+    return request.get(options, (error: any, response: Response, body: T): void => {
       const statusCode = get(response, 'statusCode') || 500;
       if (error) {
         reject(error);
@@ -65,8 +65,8 @@ export async function requestGet<T>(options: any): Promise<T> {
           console.log('=====');
           console.log(body);
           console.log('=====');
-          const result: T = JSON.parse(body);
-          resolve(result);
+          // const result: T = body;
+          resolve(body);
         } catch (parsingError) {
           console.error(body);
           reject(parsingError);

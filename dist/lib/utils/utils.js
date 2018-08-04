@@ -100,8 +100,8 @@ function requestGet(options) {
                                         console.log('=====');
                                         console.log(body);
                                         console.log('=====');
-                                        var result = JSON.parse(body);
-                                        resolve(result);
+                                        // const result: T = body;
+                                        resolve(body);
                                     }
                                     catch (parsingError) {
                                         console.error(body);
