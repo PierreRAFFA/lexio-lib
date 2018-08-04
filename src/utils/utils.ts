@@ -63,6 +63,7 @@ export async function requestGet<T>(options: any): Promise<T> {
           const result: T = JSON.parse(body);
           resolve(result);
         } catch (parsingError) {
+          console.error(body);
           reject(parsingError);
         }
       }

@@ -18,7 +18,7 @@ export async function getUsers(req: LexioRequest | undefined, ids: Array<string>
 
   const filters = {where: {id: {inq: ids}}};
 
-  const uri: string = `${serviceHost}/api/users?access_token=${accessToken}&filters=${JSON.stringify(filters)}`;
+  const uri: string = `${serviceHost}/api/users`;
 
   const options = {
     uri,
@@ -27,7 +27,7 @@ export async function getUsers(req: LexioRequest | undefined, ids: Array<string>
       filters: JSON.stringify(filters),
     },
     headers: {
-      'ApiVersion': req
+      'ApiVersion': apiVersion
     },
     json: true // Automatically parses the JSON string in the response
   };

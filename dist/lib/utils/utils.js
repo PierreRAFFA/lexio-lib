@@ -100,6 +100,7 @@ function requestGet(options) {
                                         resolve(result);
                                     }
                                     catch (parsingError) {
+                                        console.error(body);
                                         reject(parsingError);
                                     }
                                 }
