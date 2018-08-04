@@ -6,7 +6,7 @@ import { Request } from "express";
 
 export const LATEST_API_VERSION = '4.0';
 
-class Lexio {
+export class Lexio {
 
   /**
    *
@@ -68,6 +68,3 @@ export interface IUser {
   created: string;
   firebaseToken: string;
 }
-
-export const lexio: Lexio = new Lexio();
-

@@ -57733,10 +57733,9 @@
         };
         return Lexio;
     }());
-    var lexio = new Lexio();
 
     exports.LATEST_API_VERSION = LATEST_API_VERSION$1;
-    exports.lexio = lexio;
+    exports.Lexio = Lexio;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
