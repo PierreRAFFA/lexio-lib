@@ -1,4 +1,4 @@
-export default {
+const config: any = {
   '0.1': {
     'lexio-authentication': 'http://lexio-authentication:3010',
     'lexio-user': 'http://lexio-authentication:3010',
@@ -16,3 +16,5 @@ export default {
     'lexio-social': 'http://lexio-social:3010',
   }
 };
+
+export default config;
