@@ -57727,8 +57727,7 @@ var Lexio = /** @class */ (function () {
     };
     return Lexio;
 }());
-var index = new Lexio();
+var lexio = new Lexio();
 
-export default index;
-export { LATEST_API_VERSION$1 as LATEST_API_VERSION };
+export { LATEST_API_VERSION$1 as LATEST_API_VERSION, lexio };
 //# sourceMappingURL=index.es5.js.map
