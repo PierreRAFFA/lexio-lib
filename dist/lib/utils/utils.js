@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
-var request = require("request");
 var LATEST_API_VERSION = '1.0';
 function error(message, statusCode) {
     var error = new Error(message);
@@ -89,21 +88,7 @@ function requestGet(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        return [2 /*return*/, request.get(options, function (error, response, body) {
-                                var statusCode = lodash_1.get(response, 'statusCode') || 500;
-                                if (error) {
-                                    reject(error);
-                                }
-                                else {
-                                    try {
-                                        var result = JSON.parse(body);
-                                        resolve(result);
-                                    }
-                                    catch (parsingError) {
-                                        reject(parsingError);
-                                    }
-                                }
-                            })];
+                        return [2 /*return*/];
                     });
                 }); })];
         });
