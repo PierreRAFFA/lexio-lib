@@ -49,17 +49,17 @@ export function getJwt(req: LexioRequest): string {
 /**
  *
  * @param options
- * @returns {Promise<any>}
+ * @returns {Promise<T>}
  */
-export async function requestPromise(options: any): Promise<any> {
-  return new Promise<any>(async (resolve, reject) => {
+export async function requestGet<T>(options: any): Promise<T> {
+  return new Promise<T>(async (resolve, reject) => {
     return request.get(options, (error: any, response: Response, body: any): void => {
       const statusCode = get(response, 'statusCode') || 500;
       if (error) {
         reject(error);
       } else {
         try {
-          const result: any = JSON.parse(body);
+          const result: T = JSON.parse(body);
           resolve(result);
         } catch (parsingError) {
           reject(parsingError);

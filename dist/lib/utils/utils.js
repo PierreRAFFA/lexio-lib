@@ -81,9 +81,9 @@ exports.getJwt = getJwt;
 /**
  *
  * @param options
- * @returns {Promise<any>}
+ * @returns {Promise<T>}
  */
-function requestPromise(options) {
+function requestGet(options) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
         return __generator(this, function (_a) {
@@ -109,5 +109,5 @@ function requestPromise(options) {
         });
     });
 }
-exports.requestPromise = requestPromise;
+exports.requestGet = requestGet;
 //# sourceMappingURL=utils.js.map

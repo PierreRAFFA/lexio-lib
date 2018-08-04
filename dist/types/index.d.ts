@@ -1,6 +1,6 @@
 import { Request } from "express";
 export declare const LATEST_API_VERSION = "5.0";
-export default class Lexio {
+declare class Lexio {
     /**
      *
      */
@@ -19,6 +19,8 @@ export default class Lexio {
      */
     getUsers(ids: Array<string>): Promise<Array<IUser>>;
 }
+declare const lexio: Lexio;
+export { lexio };
 export interface LexioRequest extends Request {
     user: {
         accessToken: string;

@@ -57557,6 +57557,10 @@ request$4.forever = function (agentOptions, optionsArg) {
   options.forever = true;
   return request$4.defaults(options)
 };
+
+// Exports
+
+var request_1 = request$4;
 request$4.Request = request$3;
 request$4.initParams = initParams;
 
@@ -57580,8 +57584,69 @@ var LATEST_API_VERSION = '1.0';
 function getApiVersion(req) {
     return lodash_8(req, 'headers.apiversion') || LATEST_API_VERSION;
 }
+/**
+ *
+ * @param {LexioRequest} req
+ * @returns {string}
+ */
+function getAccessToken(req) {
+    return lodash_8(req, 'user.accessToken');
+}
+/**
+ *
+ * @param options
+ * @returns {Promise<T>}
+ */
+function requestGet(options) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        return [2 /*return*/, request_1.get(options, function (error, response, body) {
+                                var statusCode = lodash_8(response, 'statusCode') || 500;
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    try {
+                                        var result = JSON.parse(body);
+                                        resolve(result);
+                                    }
+                                    catch (parsingError) {
+                                        reject(parsingError);
+                                    }
+                                }
+                            })];
+                    });
+                }); })];
+        });
+    });
+}
 
-// import { getServiceHost } from "../serviceRegistry";
+var config = {
+    '0.1': {
+        'lexio-authentication': 'http://lexio-authentication:3010',
+        'lexio-user': 'http://lexio-authentication:3010',
+        'lexio-game': 'http://lexio-game:3010',
+        'lexio-purchase': 'http://lexio-purchase:3010',
+        'lexio-notification': 'http://lexio-notification:3010',
+        'lexio-social': 'http://lexio-social:3010'
+    },
+    '1.0': {
+        'lexio-authentication': 'http://lexio-authentication:3010',
+        'lexio-user': 'http://lexio-authentication:3010',
+        'lexio-game': 'http://lexio-game2:3000',
+        'lexio-purchase': 'http://lexio-purchase:3010',
+        'lexio-notification': 'http://lexio-notification:3010',
+        'lexio-social': 'http://lexio-social:3010',
+    }
+};
+
+function getServiceHost(apiVersion, serviceName) {
+    return lodash_8(config, "[" + apiVersion + "][" + serviceName + "]");
+}
+
 /**
  *
  * @param {Array<string>} ids
@@ -57590,11 +57655,29 @@ function getApiVersion(req) {
  */
 function getUsers(req, ids) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiVersion;
+        var apiVersion, accessToken, serviceHost, filters, uri, options;
         return __generator(this, function (_a) {
-            apiVersion = getApiVersion(req);
-            // const accessToken: string = getAccessToken(req);
-            return [2 /*return*/, []];
+            switch (_a.label) {
+                case 0:
+                    apiVersion = getApiVersion(req);
+                    accessToken = getAccessToken(req);
+                    serviceHost = getServiceHost(apiVersion, 'lexio-authentication');
+                    filters = { where: { id: { inq: ids } } };
+                    uri = serviceHost + "/api/users?access_token=" + accessToken + "&filters=" + JSON.stringify(filters);
+                    options = {
+                        uri: uri,
+                        qs: {
+                            access_token: accessToken,
+                            filters: JSON.stringify(filters),
+                        },
+                        headers: {
+                            'ApiVersion': req
+                        },
+                        json: true // Automatically parses the JSON string in the response
+                    };
+                    return [4 /*yield*/, requestGet(options)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
         });
     });
 }
@@ -57640,7 +57723,7 @@ var Lexio = /** @class */ (function () {
     };
     return Lexio;
 }());
+var lexio = new Lexio();
 
-export default Lexio;
-export { LATEST_API_VERSION$1 as LATEST_API_VERSION };
+export { LATEST_API_VERSION$1 as LATEST_API_VERSION, lexio };
 //# sourceMappingURL=index.es5.js.map

@@ -21,6 +21,6 @@ export declare function getJwt(req: LexioRequest): string;
 /**
  *
  * @param options
- * @returns {Promise<any>}
+ * @returns {Promise<T>}
  */
-export declare function requestPromise(options: any): Promise<any>;
+export declare function requestGet<T>(options: any): Promise<T>;

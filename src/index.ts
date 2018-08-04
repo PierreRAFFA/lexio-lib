@@ -6,7 +6,7 @@ import { Request } from "express";
 
 export const LATEST_API_VERSION = '5.0';
 
-export default class Lexio {
+class Lexio {
 
   /**
    *
@@ -40,8 +40,8 @@ export default class Lexio {
     }
   }
 }
-// const lexio: Lexio = new Lexio();
-// export { lexio };
+const lexio: Lexio = new Lexio();
+export { lexio };
 
 export interface LexioRequest extends Request {
   user: {
