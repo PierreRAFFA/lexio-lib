@@ -3,7 +3,7 @@ import { getAccessToken, getApiVersion, requestGet } from "../utils/utils";
 import serviceRegistry from "../serviceRegistry";
 import { get } from 'lodash';
 import { Response } from "request";
-import { IUser, Lexio, LexioRequest } from "../index";
+import { IUser, LexioRequest } from "../index";
 
 /**
  *
