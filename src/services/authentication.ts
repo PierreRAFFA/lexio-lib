@@ -1,9 +1,7 @@
 
 import { getAccessToken, getApiVersion, requestGet } from "../utils/utils";
-import serviceRegistry from "../serviceRegistry";
-import { get } from 'lodash';
-import { Response } from "request";
 import { IUser, LexioRequest } from "../index";
+import { getServiceHost } from "../serviceRegistry";
 
 /**
  *
@@ -16,7 +14,7 @@ export async function getUsers(req: LexioRequest | undefined, ids: Array<string>
   const apiVersion: string = getApiVersion(req);
   const accessToken: string = getAccessToken(req);
 
-  const serviceHost: string = serviceRegistry.getServiceHost(apiVersion, 'lexio-authentication');
+  const serviceHost: string = getServiceHost(apiVersion, 'lexio-authentication');
 
   const filters = {where: {id: {inq: ids}}};
 

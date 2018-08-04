@@ -51,7 +51,7 @@ function getUsers(req, ids) {
                 case 0:
                     apiVersion = utils_1.getApiVersion(req);
                     accessToken = utils_1.getAccessToken(req);
-                    serviceHost = serviceRegistry_1.default.getServiceHost(apiVersion, 'lexio-authentication');
+                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-authentication');
                     filters = { where: { id: { inq: ids } } };
                     uri = serviceHost + "/api/users?access_token=" + accessToken + "&filters=" + JSON.stringify(filters);
                     options = {

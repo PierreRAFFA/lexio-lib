@@ -11,9 +11,14 @@ export default class Lexio {
      * @param {LexioRequest} req
      */
     fromReq(req: LexioRequest): Lexio;
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    getUsers(ids: Array<string>): Promise<Array<IUser>>;
 }
-declare const lexio: Lexio;
-export { lexio };
 export interface LexioRequest extends Request {
     user: {
         accessToken: string;
