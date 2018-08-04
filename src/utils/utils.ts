@@ -53,19 +53,18 @@ export function getJwt(req: LexioRequest): string {
  */
 export async function requestPromise(options: any): Promise<any> {
   return new Promise<any>(async (resolve, reject) => {
-    request.get;
-    // return request.get(options, (error: any, response: Response, body: any): void => {
-    //   const statusCode = get(response, 'statusCode') || 500;
-    //   if (error) {
-    //     reject(error);
-    //   } else {
-    //     try {
-    //       const result: any = JSON.parse(body);
-    //       resolve(result);
-    //     } catch (parsingError) {
-    //       reject(parsingError);
-    //     }
-    //   }
-    // });
+    return request.get(options, (error: any, response: Response, body: any): void => {
+      const statusCode = get(response, 'statusCode') || 500;
+      if (error) {
+        reject(error);
+      } else {
+        try {
+          const result: any = JSON.parse(body);
+          resolve(result);
+        } catch (parsingError) {
+          reject(parsingError);
+        }
+      }
+    });
   });
 }

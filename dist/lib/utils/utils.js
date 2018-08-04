@@ -89,8 +89,21 @@ function requestPromise(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        request_1.default.get;
-                        return [2 /*return*/];
+                        return [2 /*return*/, request_1.default.get(options, function (error, response, body) {
+                                var statusCode = lodash_1.get(response, 'statusCode') || 500;
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    try {
+                                        var result = JSON.parse(body);
+                                        resolve(result);
+                                    }
+                                    catch (parsingError) {
+                                        reject(parsingError);
+                                    }
+                                }
+                            })];
                     });
                 }); })];
         });
