@@ -42,5 +42,7 @@ export interface IUser {
     created: string;
     firebaseToken: string;
 }
-declare const lexio: Lexio;
-export default lexio;
+declare const _default: {
+    lexio: Lexio;
+};
+export default _default;

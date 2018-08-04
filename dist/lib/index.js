@@ -81,5 +81,5 @@ var Lexio = /** @class */ (function () {
     return Lexio;
 }());
 var lexio = new Lexio();
-exports.default = lexio;
+exports.default = { lexio: lexio };
 //# sourceMappingURL=index.js.map

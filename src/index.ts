@@ -70,5 +70,5 @@ export interface IUser {
 }
 
 const lexio: Lexio = new Lexio();
-export default lexio;
+export default { lexio };
 
