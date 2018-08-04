@@ -69,6 +69,6 @@ export interface IUser {
   firebaseToken: string;
 }
 
-const lexio: Lexio = new Lexio();
-export default { lexio };
+
+export default new Lexio();
 

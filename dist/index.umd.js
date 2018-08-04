@@ -57760,8 +57760,7 @@
         };
         return Lexio;
     }());
-    var lexio = new Lexio();
-    var index = { lexio: lexio };
+    var index = new Lexio();
 
     exports.LATEST_API_VERSION = LATEST_API_VERSION$1;
     exports.default = index;
