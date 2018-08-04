@@ -41,6 +41,8 @@ export default class Lexio {
   // }
 }
 
+export const lexio: Lexio = new Lexio();
+
 export interface LexioRequest extends Request {
   user: {
     accessToken: string;
