@@ -45,10 +45,10 @@ var utils_1 = require("../utils/utils");
  */
 function getUsers(req, ids) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiVersion, accessToken;
+        var apiVersion;
         return __generator(this, function (_a) {
             apiVersion = utils_1.getApiVersion(req);
-            accessToken = utils_1.getAccessToken(req);
+            // const accessToken: string = getAccessToken(req);
             return [2 /*return*/, []];
         });
     });

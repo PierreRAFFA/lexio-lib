@@ -1,6 +1,5 @@
 import { get } from 'lodash';
-import { Response } from "request";
-import * as request from 'request';
+import * as request from "request";
 import { LexioError, LexioRequest } from "../index";
 
 const LATEST_API_VERSION = '1.0';
@@ -54,7 +53,7 @@ export function getJwt(req: LexioRequest): string {
  */
 export async function requestGet<T>(options: any): Promise<T> {
   return new Promise<T>(async (resolve, reject) => {
-    return request.get(options, (error: any, response: Response, body: any): void => {
+    return request.get(options, (error: any, response: request.Response, body: any): void => {
       const statusCode = get(response, 'statusCode') || 500;
       if (error) {
         reject(error);

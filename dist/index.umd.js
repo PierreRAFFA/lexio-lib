@@ -57586,14 +57586,6 @@
     function getApiVersion(req) {
         return lodash_8(req, 'headers.apiversion') || LATEST_API_VERSION;
     }
-    /**
-     *
-     * @param {LexioRequest} req
-     * @returns {string}
-     */
-    function getAccessToken(req) {
-        return lodash_8(req, 'user.accessToken');
-    }
 
     // import { getServiceHost } from "../serviceRegistry";
     /**
@@ -57604,10 +57596,10 @@
      */
     function getUsers(req, ids) {
         return __awaiter(this, void 0, void 0, function () {
-            var apiVersion, accessToken;
+            var apiVersion;
             return __generator(this, function (_a) {
                 apiVersion = getApiVersion(req);
-                accessToken = getAccessToken(req);
+                // const accessToken: string = getAccessToken(req);
                 return [2 /*return*/, []];
             });
         });

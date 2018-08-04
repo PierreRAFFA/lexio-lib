@@ -1,5 +1,5 @@
 
-import { getAccessToken, getApiVersion } from "../utils/utils";
+import { getApiVersion } from "../utils/utils";
 import { IUser, LexioRequest } from "../index";
 // import { getServiceHost } from "../serviceRegistry";
 
@@ -13,7 +13,7 @@ export async function getUsers(req: LexioRequest | undefined, ids: Array<string>
 
 
   const apiVersion: string = getApiVersion(req);
-  const accessToken: string = getAccessToken(req);
+  // const accessToken: string = getAccessToken(req);
   return [];
   //
   // const serviceHost: string = getServiceHost(apiVersion, 'lexio-authentication');
