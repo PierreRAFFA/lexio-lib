@@ -39,7 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import "core-js/fn/array.find"
 // ...
 var authentication_1 = require("./services/authentication");
-// export namespace Lexio {
 exports.LATEST_API_VERSION = '4.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
@@ -82,7 +81,4 @@ var Lexio = /** @class */ (function () {
     return Lexio;
 }());
 exports.Lexio = Lexio;
-// }
-var lexio = new Lexio();
-exports.default = lexio;
 //# sourceMappingURL=index.js.map

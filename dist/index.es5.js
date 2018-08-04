@@ -57713,7 +57713,6 @@ function getUsers(req, ids) {
     });
 }
 
-// export namespace Lexio {
 var LATEST_API_VERSION$1 = '4.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
@@ -57755,9 +57754,6 @@ var Lexio = /** @class */ (function () {
     };
     return Lexio;
 }());
-// }
-var lexio = new Lexio();
 
-export default lexio;
 export { LATEST_API_VERSION$1 as LATEST_API_VERSION, Lexio };
 //# sourceMappingURL=index.es5.js.map
