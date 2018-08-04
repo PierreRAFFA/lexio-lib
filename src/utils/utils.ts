@@ -53,7 +53,7 @@ export function getJwt(req: LexioRequest): string {
  */
 export async function requestGet(options: any): Promise<any> {
   return new Promise<any>(async (resolve, reject) => {
-    // return request.get(options, (error: any, response: request.Response, body: any): void => {
+    return request.get(options, (error: any, response: request.Response, body: any): void => {
     //   const statusCode = get(response, 'statusCode') || 500;
     //   if (error) {
     //     reject(error);
@@ -65,6 +65,6 @@ export async function requestGet(options: any): Promise<any> {
     //       reject(parsingError);
     //     }
     //   }
-    // });
+    });
   });
 }
