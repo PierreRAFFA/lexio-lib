@@ -3,7 +3,7 @@ import { get } from 'lodash';
 const CONFIG: any = {
   '0.1': {
     'lexio-authentication': 'http://lexio-authentication:3010',
-    'lexio-user': 'http://lexio-authentication:3010',
+    'lexio-user': 'http://lexio-authentication:3010', // @Todo separate authentication and user
     'lexio-game': 'http://lexio-game:3010',
     'lexio-purchase': 'http://lexio-purchase:3010',
     'lexio-notification': 'http://lexio-notification:3010',

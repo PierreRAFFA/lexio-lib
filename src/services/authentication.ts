@@ -1,36 +1,62 @@
-import { getAccessToken, getApiVersion, requestGet } from "../utils/utils";
-import { IUser, LexioRequest } from "../index";
+import { getAccessToken, getApiVersion, requestGet, requestPost } from "../utils/utils";
+import { IAuthenticate, IFullUser, IUser, LexioRequest } from "../index";
 import { getServiceHost } from "../serviceRegistry";
 
 /**
  *
- * @param {Array<string>} ids
- * @param {string} apiVersion
- * @returns {Promise<Array<IUser>>}
+ * @param {LexioRequest} req
+ * @param {string} facebookToken
+ * @param {string} firebaseToken
+ * @returns {Promise<IUser>}
  */
-export async function getUsers(req: LexioRequest | undefined, ids: Array<string>): Promise<Array<IUser>> {
+export async function authenticateViaFacebook(
+  req: LexioRequest| undefined, facebookToken: string, firebaseToken: string): Promise<IFullUser> {
 
   const apiVersion: string = getApiVersion(req);
-  const accessToken: string = getAccessToken(req);
 
   const serviceHost: string = getServiceHost(apiVersion, 'lexio-authentication');
+  const uri: string = `${serviceHost}/facebook/token`;
 
-  const filters = {where: {id: {inq: ids}}};
-
-  const uri: string = `${serviceHost}/api/users`;
-
-  const options = {
+  const options: any = {
     uri,
-    qs: {
-      access_token: accessToken,
-      filters: JSON.stringify(filters),
-    },
     headers: {
       'ApiVersion': apiVersion
     },
-    json: true // Automatically parses the JSON string in the response
+    json: true, // Automatically parses the JSON string in the response,
+    form: {
+      access_token: facebookToken,
+      firebase_token: firebaseToken,
+    }
   };
 
-  return await requestGet<Array<IUser>>(options);
+  return await requestPost<IFullUser>(options);
 }
 
+/**
+ *
+ * @param {LexioRequest} req
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<IUser>}
+ */
+export async function authenticate(req: LexioRequest | undefined, email: string, password: string): Promise<IAuthenticate> {
+
+  const apiVersion: string = getApiVersion(req);
+
+  const serviceHost: string = getServiceHost(apiVersion, 'lexio-authentication');
+  const uri: string = `${serviceHost}/api/users/login`;
+
+  const options: any = {
+    uri,
+    headers: {
+      'ApiVersion': apiVersion
+    },
+    json: true, // Automatically parses the JSON string in the response,
+    form: {
+      email: email,
+      password: password,
+    }
+  };
+
+  return await requestPost<IAuthenticate>(options);
+}

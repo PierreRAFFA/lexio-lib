@@ -1,5 +1,7 @@
 import { Request } from "express";
-export declare const LATEST_API_VERSION = "5.0";
+import { getServiceHost } from "./serviceRegistry";
+import { getAuthenticatedUser } from "./utils/utils";
+export declare const LATEST_API_VERSION = "1.0";
 declare class Lexio {
     /**
      *
@@ -11,6 +13,27 @@ declare class Lexio {
      * @param {LexioRequest} req
      */
     fromReq(req: LexioRequest): Lexio;
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    authenticate(email: string, password: string): Promise<IAuthenticate>;
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    authenticateViaFacebook(facebookToken: string, firebaseToken: string): Promise<IFullUser>;
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    me(): Promise<IFullUser>;
     /**
      *
      * @param {Array<string>} ids
@@ -48,13 +71,29 @@ export interface IUser {
     created: string;
     firebaseToken: string;
 }
-export interface IGame {
+export interface IFullUser {
     id: string;
+    username: string;
+    email: string;
+    balance: number;
+    statistics: object;
+    identities: object;
+    created: string;
+    firebaseToken: string;
+    accessToken: string;
+}
+export interface IGame {
+    id?: string;
     language: string;
     userId: string;
     user?: object;
     score: number;
     statistics: object;
-    created: string;
+    created?: string;
     serverDate?: string;
 }
+export interface IAuthenticate {
+    access_token: string;
+    jwt: string;
+}
+export { getServiceHost, getAuthenticatedUser };

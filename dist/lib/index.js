@@ -35,9 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var authentication_1 = require("./services/authentication");
+var user_1 = require("./services/user");
 var game_1 = require("./services/game");
-exports.LATEST_API_VERSION = '5.0';
+var serviceRegistry_1 = require("./serviceRegistry");
+exports.getServiceHost = serviceRegistry_1.getServiceHost;
+var authentication_1 = require("./services/authentication");
+var utils_1 = require("./utils/utils");
+exports.getAuthenticatedUser = utils_1.getAuthenticatedUser;
+exports.LATEST_API_VERSION = '1.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
         /**
@@ -59,14 +64,14 @@ var Lexio = /** @class */ (function () {
      * @param {string} apiVersion
      * @returns {Promise<Array<IUser>>}
      */
-    Lexio.prototype.getUsers = function (ids) {
+    Lexio.prototype.authenticate = function (email, password) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, authentication_1.getUsers(this._originalReq, ids)];
+                        return [4 /*yield*/, authentication_1.authenticate(this._originalReq, email, password)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
                         e_1 = _a.sent();
@@ -78,10 +83,79 @@ var Lexio = /** @class */ (function () {
     };
     /**
      *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    Lexio.prototype.authenticateViaFacebook = function (facebookToken, firebaseToken) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, authentication_1.authenticateViaFacebook(this._originalReq, facebookToken, firebaseToken)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_2 = _a.sent();
+                        throw e_2;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    Lexio.prototype.me = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, user_1.me(this._originalReq)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_3 = _a.sent();
+                        throw e_3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    Lexio.prototype.getUsers = function (ids) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, user_1.getUsers(this._originalReq, ids)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_4 = _a.sent();
+                        throw e_4;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
      */
     Lexio.prototype.postGame = function (game) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_2;
+            var e_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -89,8 +163,8 @@ var Lexio = /** @class */ (function () {
                         return [4 /*yield*/, game_1.postGame(this._originalReq, game)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
-                        e_2 = _a.sent();
-                        throw e_2;
+                        e_5 = _a.sent();
+                        throw e_5;
                     case 3: return [2 /*return*/];
                 }
             });

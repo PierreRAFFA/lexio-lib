@@ -18193,10 +18193,9 @@ var memstore = {
 var _args = [
 	[
 		"tough-cookie@2.3.4",
-		"/Users/pierre/WORKSPACE/LEXIO/lexio-lib"
+		"/usr/local/lib/node_modules/lexio"
 	]
 ];
-var _development = true;
 var _from = "tough-cookie@2.3.4";
 var _id = "tough-cookie@2.3.4";
 var _inBundle = false;
@@ -18221,7 +18220,7 @@ var _requiredBy = [
 ];
 var _resolved = "https://registry.npmjs.org/tough-cookie/-/tough-cookie-2.3.4.tgz";
 var _spec = "2.3.4";
-var _where = "/Users/pierre/WORKSPACE/LEXIO/lexio-lib";
+var _where = "/usr/local/lib/node_modules/lexio";
 var author = {
 	name: "Jeremy Stashewsky",
 	email: "jstashewsky@salesforce.com"
@@ -18289,7 +18288,6 @@ var scripts = {
 var version = "2.3.4";
 var _package = {
 	_args: _args,
-	_development: _development,
 	_from: _from,
 	_id: _id,
 	_inBundle: _inBundle,
@@ -18321,7 +18319,6 @@ var _package = {
 
 var _package$1 = /*#__PURE__*/Object.freeze({
     _args: _args,
-    _development: _development,
     _from: _from,
     _id: _id,
     _inBundle: _inBundle,
@@ -57557,6 +57554,10 @@ request$4.forever = function (agentOptions, optionsArg) {
   options.forever = true;
   return request$4.defaults(options)
 };
+
+// Exports
+
+var request_1 = request$4;
 request$4.Request = request$3;
 request$4.initParams = initParams;
 
@@ -57570,7 +57571,14 @@ Object.defineProperty(request$4, 'debug', {
     request$4.Request.debug = debug;
   }
 });
+var request_2 = request_1.get;
+var request_3 = request_1.post;
 
+function createError(message, statusCode) {
+    var error = new Error(message);
+    error.statusCode = statusCode;
+    return error;
+}
 /**
  *
  * @param {LexioRequest} req
@@ -57580,12 +57588,26 @@ function getApiVersion(req) {
     return lodash_8(req, 'headers.apiversion') || LATEST_API_VERSION;
 }
 /**
+ * Returns the access_token send by the client
+ *
+ * user.accessToken added by the authenticate middleware of the gateway
  *
  * @param {LexioRequest} req
  * @returns {string}
  */
 function getAccessToken(req) {
     return lodash_8(req, 'user.accessToken');
+}
+/**
+ * Returns the access_token send by the client
+ *
+ * user.accessToken added by the authenticate middleware of the gateway
+ *
+ * @param {LexioRequest} req
+ * @returns {string}
+ */
+function getAuthenticatedUser$$1(req) {
+    return lodash_8(req, 'user');
 }
 /**
  *
@@ -57598,9 +57620,18 @@ function requestGet(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        return [2 /*return*/, undefined(options, function (error, response, body) {
-                                if (error) {
-                                    reject(error);
+                        return [2 /*return*/, request_2(options, function (error, response, body) {
+                                console.log('requestGet');
+                                console.dir(options, { depth: undefined });
+                                // console.log(error);
+                                // console.log(body);
+                                // console.log(response);
+                                //weird, 401 returns successful with error set to null
+                                if (error || (response && response.statusCode !== 200)) {
+                                    var message = lodash_8(error, 'message') || response.body.error.message;
+                                    console.log(response.statusCode);
+                                    console.log(response.statusMessage);
+                                    reject(createError(message, response.statusCode || 500));
                                 }
                                 else {
                                     try {
@@ -57628,9 +57659,17 @@ function requestPost(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        return [2 /*return*/, undefined(options, function (error, response, body) {
-                                if (error) {
-                                    reject(error);
+                        return [2 /*return*/, request_3(options, function (error, response, body) {
+                                console.log('requestPost');
+                                // console.dir(options, {depth: undefined});
+                                // console.log(error);
+                                // console.log(body);
+                                //weird, 401 returns successful with error set to null
+                                if (error || (response && response.statusCode !== 200)) {
+                                    var message = lodash_8(error, 'message') || response.body.error.message;
+                                    console.log(response.statusCode);
+                                    console.log(response.statusMessage);
+                                    reject(createError(message, response.statusCode || 500));
                                 }
                                 else {
                                     try {
@@ -57676,6 +57715,48 @@ function getServiceHost(apiVersion, serviceName) {
  * @param {string} apiVersion
  * @returns {Promise<Array<IUser>>}
  */
+function me(req) {
+    return __awaiter(this, void 0, void 0, function () {
+        var apiVersion, accessToken, serviceHost, uri, options, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log('me');
+                    apiVersion = getApiVersion(req);
+                    accessToken = lodash_8(req, 'headers.authorization');
+                    console.log(accessToken);
+                    serviceHost = getServiceHost(apiVersion, 'lexio-user');
+                    uri = serviceHost + "/api/users/me";
+                    options = {
+                        uri: uri,
+                        qs: {
+                            access_token: accessToken,
+                        },
+                        headers: {
+                            'ApiVersion': apiVersion,
+                            "authorization": accessToken
+                        },
+                        json: true // Automatically parses the JSON string in the response
+                    };
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, requestGet(options)];
+                case 2: return [2 /*return*/, _a.sent()];
+                case 3:
+                    e_1 = _a.sent();
+                    throw e_1;
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+/**
+ *
+ * @param {Array<string>} ids
+ * @param {string} apiVersion
+ * @returns {Promise<Array<IUser>>}
+ */
 function getUsers(req, ids) {
     return __awaiter(this, void 0, void 0, function () {
         var apiVersion, accessToken, serviceHost, filters, uri, options;
@@ -57684,7 +57765,7 @@ function getUsers(req, ids) {
                 case 0:
                     apiVersion = getApiVersion(req);
                     accessToken = getAccessToken(req);
-                    serviceHost = getServiceHost(apiVersion, 'lexio-authentication');
+                    serviceHost = getServiceHost(apiVersion, 'lexio-user');
                     filters = { where: { id: { inq: ids } } };
                     uri = serviceHost + "/api/users";
                     options = {
@@ -57738,7 +57819,74 @@ function postGame(req, game) {
     });
 }
 
-var LATEST_API_VERSION = '5.0';
+/**
+ *
+ * @param {LexioRequest} req
+ * @param {string} facebookToken
+ * @param {string} firebaseToken
+ * @returns {Promise<IUser>}
+ */
+function authenticateViaFacebook(req, facebookToken, firebaseToken) {
+    return __awaiter(this, void 0, void 0, function () {
+        var apiVersion, serviceHost, uri, options;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    apiVersion = getApiVersion(req);
+                    serviceHost = getServiceHost(apiVersion, 'lexio-authentication');
+                    uri = serviceHost + "/facebook/token";
+                    options = {
+                        uri: uri,
+                        headers: {
+                            'ApiVersion': apiVersion
+                        },
+                        json: true,
+                        form: {
+                            access_token: facebookToken,
+                            firebase_token: firebaseToken,
+                        }
+                    };
+                    return [4 /*yield*/, requestPost(options)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+/**
+ *
+ * @param {LexioRequest} req
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<IUser>}
+ */
+function authenticate(req, email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        var apiVersion, serviceHost, uri, options;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    apiVersion = getApiVersion(req);
+                    serviceHost = getServiceHost(apiVersion, 'lexio-authentication');
+                    uri = serviceHost + "/api/users/login";
+                    options = {
+                        uri: uri,
+                        headers: {
+                            'ApiVersion': apiVersion
+                        },
+                        json: true,
+                        form: {
+                            email: email,
+                            password: password,
+                        }
+                    };
+                    return [4 /*yield*/, requestPost(options)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+
+var LATEST_API_VERSION = '1.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
         /**
@@ -57760,14 +57908,14 @@ var Lexio = /** @class */ (function () {
      * @param {string} apiVersion
      * @returns {Promise<Array<IUser>>}
      */
-    Lexio.prototype.getUsers = function (ids) {
+    Lexio.prototype.authenticate = function (email, password) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, getUsers(this._originalReq, ids)];
+                        return [4 /*yield*/, authenticate(this._originalReq, email, password)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
                         e_1 = _a.sent();
@@ -57779,15 +57927,18 @@ var Lexio = /** @class */ (function () {
     };
     /**
      *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
      */
-    Lexio.prototype.postGame = function (game) {
+    Lexio.prototype.authenticateViaFacebook = function (facebookToken, firebaseToken) {
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, postGame(this._originalReq, game)];
+                        return [4 /*yield*/, authenticateViaFacebook(this._originalReq, facebookToken, firebaseToken)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
                         e_2 = _a.sent();
@@ -57797,9 +57948,75 @@ var Lexio = /** @class */ (function () {
             });
         });
     };
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    Lexio.prototype.me = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, me(this._originalReq)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_3 = _a.sent();
+                        throw e_3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
+     * @param {Array<string>} ids
+     * @param {string} apiVersion
+     * @returns {Promise<Array<IUser>>}
+     */
+    Lexio.prototype.getUsers = function (ids) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, getUsers(this._originalReq, ids)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_4 = _a.sent();
+                        throw e_4;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
+     */
+    Lexio.prototype.postGame = function (game) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, postGame(this._originalReq, game)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_5 = _a.sent();
+                        throw e_5;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return Lexio;
 }());
 var lexio = new Lexio();
 
-export { LATEST_API_VERSION, lexio };
+export { LATEST_API_VERSION, lexio, getServiceHost, getAuthenticatedUser$$1 as getAuthenticatedUser };
 //# sourceMappingURL=index.es5.js.map

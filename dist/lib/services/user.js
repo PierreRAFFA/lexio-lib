@@ -35,74 +35,85 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = require("lodash");
 var utils_1 = require("../utils/utils");
 var serviceRegistry_1 = require("../serviceRegistry");
 /**
  *
- * @param {LexioRequest} req
- * @param {string} facebookToken
- * @param {string} firebaseToken
- * @returns {Promise<IUser>}
+ * @param {Array<string>} ids
+ * @param {string} apiVersion
+ * @returns {Promise<Array<IUser>>}
  */
-function authenticateViaFacebook(req, facebookToken, firebaseToken) {
+function me(req) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiVersion, serviceHost, uri, options;
+        var apiVersion, accessToken, serviceHost, uri, options, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log('me');
                     apiVersion = utils_1.getApiVersion(req);
-                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-authentication');
-                    uri = serviceHost + "/facebook/token";
+                    accessToken = lodash_1.get(req, 'headers.authorization');
+                    console.log(accessToken);
+                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-user');
+                    uri = serviceHost + "/api/users/me";
                     options = {
                         uri: uri,
-                        headers: {
-                            'ApiVersion': apiVersion
+                        qs: {
+                            access_token: accessToken,
                         },
-                        json: true,
-                        form: {
-                            access_token: facebookToken,
-                            firebase_token: firebaseToken,
-                        }
+                        headers: {
+                            'ApiVersion': apiVersion,
+                            "authorization": accessToken
+                        },
+                        json: true // Automatically parses the JSON string in the response
                     };
-                    return [4 /*yield*/, utils_1.requestPost(options)];
-                case 1: return [2 /*return*/, _a.sent()];
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, utils_1.requestGet(options)];
+                case 2: return [2 /*return*/, _a.sent()];
+                case 3:
+                    e_1 = _a.sent();
+                    throw e_1;
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
-exports.authenticateViaFacebook = authenticateViaFacebook;
+exports.me = me;
 /**
  *
- * @param {LexioRequest} req
- * @param {string} email
- * @param {string} password
- * @returns {Promise<IUser>}
+ * @param {Array<string>} ids
+ * @param {string} apiVersion
+ * @returns {Promise<Array<IUser>>}
  */
-function authenticate(req, email, password) {
+function getUsers(req, ids) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiVersion, serviceHost, uri, options;
+        var apiVersion, accessToken, serviceHost, filters, uri, options;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     apiVersion = utils_1.getApiVersion(req);
-                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-authentication');
-                    uri = serviceHost + "/api/users/login";
+                    accessToken = utils_1.getAccessToken(req);
+                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-user');
+                    filters = { where: { id: { inq: ids } } };
+                    uri = serviceHost + "/api/users";
                     options = {
                         uri: uri,
+                        qs: {
+                            access_token: accessToken,
+                            filters: JSON.stringify(filters),
+                        },
                         headers: {
                             'ApiVersion': apiVersion
                         },
-                        json: true,
-                        form: {
-                            email: email,
-                            password: password,
-                        }
+                        json: true // Automatically parses the JSON string in the response
                     };
-                    return [4 /*yield*/, utils_1.requestPost(options)];
+                    return [4 /*yield*/, utils_1.requestGet(options)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });
     });
 }
-exports.authenticate = authenticate;
-//# sourceMappingURL=authentication.js.map
+exports.getUsers = getUsers;
+//# sourceMappingURL=user.js.map

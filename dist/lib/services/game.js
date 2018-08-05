@@ -39,30 +39,29 @@ var utils_1 = require("../utils/utils");
 var serviceRegistry_1 = require("../serviceRegistry");
 /**
  *
- * @param {LexioRequest} req
- * @param {string} facebookToken
- * @param {string} firebaseToken
- * @returns {Promise<IUser>}
+ * @param {LexioRequest | undefined} req
+ * @param {IGame} game
+ * @returns {Promise<IGame>}
  */
-function authenticateViaFacebook(req, facebookToken, firebaseToken) {
+function postGame(req, game) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiVersion, serviceHost, uri, options;
+        var apiVersion, accessToken, serviceHost, uri, options;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     apiVersion = utils_1.getApiVersion(req);
-                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-authentication');
-                    uri = serviceHost + "/facebook/token";
+                    accessToken = utils_1.getAccessToken(req);
+                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-game');
+                    uri = serviceHost + "/api/games";
                     options = {
                         uri: uri,
+                        qs: {
+                            access_token: accessToken,
+                        },
                         headers: {
                             'ApiVersion': apiVersion
                         },
-                        json: true,
-                        form: {
-                            access_token: facebookToken,
-                            firebase_token: firebaseToken,
-                        }
+                        json: true // Automatically parses the JSON string in the response
                     };
                     return [4 /*yield*/, utils_1.requestPost(options)];
                 case 1: return [2 /*return*/, _a.sent()];
@@ -70,39 +69,5 @@ function authenticateViaFacebook(req, facebookToken, firebaseToken) {
         });
     });
 }
-exports.authenticateViaFacebook = authenticateViaFacebook;
-/**
- *
- * @param {LexioRequest} req
- * @param {string} email
- * @param {string} password
- * @returns {Promise<IUser>}
- */
-function authenticate(req, email, password) {
-    return __awaiter(this, void 0, void 0, function () {
-        var apiVersion, serviceHost, uri, options;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    apiVersion = utils_1.getApiVersion(req);
-                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-authentication');
-                    uri = serviceHost + "/api/users/login";
-                    options = {
-                        uri: uri,
-                        headers: {
-                            'ApiVersion': apiVersion
-                        },
-                        json: true,
-                        form: {
-                            email: email,
-                            password: password,
-                        }
-                    };
-                    return [4 /*yield*/, utils_1.requestPost(options)];
-                case 1: return [2 /*return*/, _a.sent()];
-            }
-        });
-    });
-}
-exports.authenticate = authenticate;
-//# sourceMappingURL=authentication.js.map
+exports.postGame = postGame;
+//# sourceMappingURL=game.js.map

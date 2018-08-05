@@ -38,12 +38,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var request = require("request");
 var index_1 = require("../index");
-function error(message, statusCode) {
+function createError(message, statusCode) {
     var error = new Error(message);
     error.statusCode = statusCode;
     return error;
 }
-exports.error = error;
+exports.createError = createError;
 /**
  *
  * @param {LexioRequest} req
@@ -54,6 +54,9 @@ function getApiVersion(req) {
 }
 exports.getApiVersion = getApiVersion;
 /**
+ * Returns the access_token send by the client
+ *
+ * user.accessToken added by the authenticate middleware of the gateway
  *
  * @param {LexioRequest} req
  * @returns {string}
@@ -79,6 +82,18 @@ function getJwt(req) {
 }
 exports.getJwt = getJwt;
 /**
+ * Returns the access_token send by the client
+ *
+ * user.accessToken added by the authenticate middleware of the gateway
+ *
+ * @param {LexioRequest} req
+ * @returns {string}
+ */
+function getAuthenticatedUser(req) {
+    return lodash_1.get(req, 'user');
+}
+exports.getAuthenticatedUser = getAuthenticatedUser;
+/**
  *
  * @param options
  * @returns {Promise<T>}
@@ -90,8 +105,17 @@ function requestGet(options) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         return [2 /*return*/, request.get(options, function (error, response, body) {
-                                if (error) {
-                                    reject(error);
+                                console.log('requestGet');
+                                console.dir(options, { depth: undefined });
+                                // console.log(error);
+                                // console.log(body);
+                                // console.log(response);
+                                //weird, 401 returns successful with error set to null
+                                if (error || (response && response.statusCode !== 200)) {
+                                    var message = lodash_1.get(error, 'message') || response.body.error.message;
+                                    console.log(response.statusCode);
+                                    console.log(response.statusMessage);
+                                    reject(createError(message, response.statusCode || 500));
                                 }
                                 else {
                                     try {
@@ -121,8 +145,16 @@ function requestPost(options) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         return [2 /*return*/, request.post(options, function (error, response, body) {
-                                if (error) {
-                                    reject(error);
+                                console.log('requestPost');
+                                // console.dir(options, {depth: undefined});
+                                // console.log(error);
+                                // console.log(body);
+                                //weird, 401 returns successful with error set to null
+                                if (error || (response && response.statusCode !== 200)) {
+                                    var message = lodash_1.get(error, 'message') || response.body.error.message;
+                                    console.log(response.statusCode);
+                                    console.log(response.statusMessage);
+                                    reject(createError(message, response.statusCode || 500));
                                 }
                                 else {
                                     try {

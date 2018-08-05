@@ -2,8 +2,8 @@
 import { NextFunction, Response } from "express";
 import * as jwt from 'jsonwebtoken';
 import { VerifyErrors } from "jsonwebtoken";
-import { error } from "../utils/utils";
 import { LexioRequest } from "../index";
+import { createError } from "../utils/utils";
 
 /**
  * Populates the request by setting the user.
@@ -17,14 +17,14 @@ export function accessControl(req: LexioRequest, res: Response, next: NextFuncti
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET as string, (err: VerifyErrors, user: any) => {
       if (err) {
-        next(error(err.message, 500));
+        next(createError(err.message, 500));
       } else {
         req.user = user;
         next();
       }
     });
   } else {
-    next(error('Not Authorized', 401));
+    next(createError('Not Authorized', 401));
   }
 }
 

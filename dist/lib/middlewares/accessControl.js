@@ -13,7 +13,7 @@ function accessControl(req, res, next) {
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
             if (err) {
-                next(utils_1.error(err.message, 500));
+                next(utils_1.createError(err.message, 500));
             }
             else {
                 req.user = user;
@@ -22,7 +22,7 @@ function accessControl(req, res, next) {
         });
     }
     else {
-        next(utils_1.error('Not Authorized', 401));
+        next(utils_1.createError('Not Authorized', 401));
     }
 }
 exports.accessControl = accessControl;

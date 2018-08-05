@@ -38,6 +38,12 @@ export default {
           'endsWith',
           'get',
         ],
+        'node_modules/request/index.js': [
+          'get',
+          'post',
+          'delete',
+          'put'
+         ]
       }
     }),
 
