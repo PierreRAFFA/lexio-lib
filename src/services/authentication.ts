@@ -1,4 +1,3 @@
-
 import { getAccessToken, getApiVersion, requestGet } from "../utils/utils";
 import { IUser, LexioRequest } from "../index";
 import { getServiceHost } from "../serviceRegistry";

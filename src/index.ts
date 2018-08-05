@@ -1,8 +1,8 @@
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
   // import "core-js/fn/array.find"
   // ...
-import { getUsers } from "./services/authentication";
 import { Request } from "express";
+import { getUsers } from "./services/authentication";
 import { postGame } from "./services/game";
 
 export const LATEST_API_VERSION = '5.0';

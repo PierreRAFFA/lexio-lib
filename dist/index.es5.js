@@ -57707,9 +57707,9 @@ function getUsers(req, ids) {
 
 /**
  *
- * @param {Array<string>} ids
- * @param {string} apiVersion
- * @returns {Promise<Array<IUser>>}
+ * @param {LexioRequest | undefined} req
+ * @param {IGame} game
+ * @returns {Promise<IGame>}
  */
 function postGame(req, game) {
     return __awaiter(this, void 0, void 0, function () {

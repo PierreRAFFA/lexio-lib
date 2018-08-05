@@ -1,13 +1,13 @@
 
 import { getAccessToken, getApiVersion, requestPost } from "../utils/utils";
-import { IGame, IUser, LexioRequest } from "../index";
+import { IGame, LexioRequest } from "../index";
 import { getServiceHost } from "../serviceRegistry";
 
 /**
  *
- * @param {Array<string>} ids
- * @param {string} apiVersion
- * @returns {Promise<Array<IUser>>}
+ * @param {LexioRequest | undefined} req
+ * @param {IGame} game
+ * @returns {Promise<IGame>}
  */
 export async function postGame(req: LexioRequest | undefined, game: IGame): Promise<IGame> {
 

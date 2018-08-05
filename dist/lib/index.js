@@ -35,9 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-// import "core-js/fn/array.find"
-// ...
 var authentication_1 = require("./services/authentication");
 var game_1 = require("./services/game");
 exports.LATEST_API_VERSION = '5.0';
