@@ -1,11 +1,12 @@
-import { get } from 'lodash';
+import { get, set } from 'lodash';
 import * as request from "request";
-import { IFullUser, IUser, LATEST_API_VERSION, LexioError, LexioRequest } from "../index";
+import { IFullUser, LATEST_API_VERSION, LexioRequest } from "../index";
 import { Response } from "request";
 
-export function createError(message: string, statusCode: number) {
-  const error: LexioError = new Error(message) as LexioError;
-  error.statusCode = statusCode;
+export function createError(message: string, statusCode: number): Error {
+  const error: Error = new Error();
+  error.message = message;
+  set(error, 'statusCode', statusCode); // to avoid transpile error
   return error;
 }
 
@@ -35,8 +36,8 @@ export function getAccessToken(req: LexioRequest | undefined): string {
  * @param {LexioRequest} req
  * @returns {string}
  */
-export function getJwt(req: LexioRequest): string {
-  let token: string = (req.headers.Authorization || req.headers.authorization) as string;
+export function getAuthorization(req: LexioRequest | undefined): string {
+  let token: string = getRawAuthorization(req);
   if (token) {
     const split: Array<string> = token.split(' ');
 
@@ -46,6 +47,15 @@ export function getJwt(req: LexioRequest): string {
   }
 
   return token;
+}
+
+/**
+ *
+ * @param {LexioRequest} req
+ * @returns {string}
+ */
+export function getRawAuthorization(req: LexioRequest | undefined): string {
+  return (get(req, 'headers.Authorization') || get(req, 'headers.authorization')) as string;
 }
 
 /**
@@ -67,8 +77,8 @@ export function getAuthenticatedUser(req: LexioRequest | undefined): IFullUser {
  */
 export async function requestGet<T>(options: any): Promise<T> {
   return new Promise<T>(async (resolve, reject) => {
+    console.log('requestGet');
     return request.get(options, (error: any, response: Response, body: T): void => {
-      console.log('requestGet');
       console.dir(options, {depth: undefined});
       // console.log(error);
       // console.log(body);
@@ -76,7 +86,9 @@ export async function requestGet<T>(options: any): Promise<T> {
 
       //weird, 401 returns successful with error set to null
       if (error || (response && response.statusCode >= 400)) {
-
+        console.log(error);
+        console.log(response);
+        console.log(body);
         const message: string = get(error, 'message') || response.body.error.message;
 
         console.log(response.statusCode);
@@ -110,7 +122,7 @@ export async function requestPost<T>(options: any): Promise<T> {
 
       //weird, 401 returns successful with error set to null
       if (error || (response && response.statusCode >= 400)) {
-
+        console.log(body);
         const message: string = get(error, 'message') || response.body.error.message;
 
         console.log(response.statusCode);

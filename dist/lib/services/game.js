@@ -70,4 +70,35 @@ function postGame(req, game) {
     });
 }
 exports.postGame = postGame;
+/**
+ *
+ * @param {LexioRequest | undefined} req
+ * @param {IGame} game
+ * @returns {Promise<IGame>}
+ */
+function getRanking(req, language, rankingReference) {
+    return __awaiter(this, void 0, void 0, function () {
+        var apiVersion, authorization, serviceHost, uri, options;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    apiVersion = utils_1.getApiVersion(req);
+                    authorization = utils_1.getRawAuthorization(req);
+                    serviceHost = serviceRegistry_1.getServiceHost(apiVersion, 'lexio-game');
+                    uri = serviceHost + "/api/rankings/" + language + "/" + rankingReference;
+                    options = {
+                        uri: uri,
+                        headers: {
+                            'ApiVersion': apiVersion,
+                            'Authorization': authorization,
+                        },
+                        json: true // Automatically parses the JSON string in the response
+                    };
+                    return [4 /*yield*/, utils_1.requestGet(options)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.getRanking = getRanking;
 //# sourceMappingURL=game.js.map

@@ -1,5 +1,5 @@
-import { IFullUser, LexioError, LexioRequest } from "../index";
-export declare function createError(message: string, statusCode: number): LexioError;
+import { IFullUser, LexioRequest } from "../index";
+export declare function createError(message: string, statusCode: number): Error;
 /**
  *
  * @param {LexioRequest} req
@@ -20,7 +20,13 @@ export declare function getAccessToken(req: LexioRequest | undefined): string;
  * @param {LexioRequest} req
  * @returns {string}
  */
-export declare function getJwt(req: LexioRequest): string;
+export declare function getAuthorization(req: LexioRequest | undefined): string;
+/**
+ *
+ * @param {LexioRequest} req
+ * @returns {string}
+ */
+export declare function getRawAuthorization(req: LexioRequest | undefined): string;
 /**
  * Returns the access_token send by the client
  *

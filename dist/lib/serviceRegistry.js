@@ -8,7 +8,7 @@ var CONFIG = {
         'lexio-game': 'http://lexio-game:3010',
         'lexio-purchase': 'http://lexio-purchase:3010',
         'lexio-notification': 'http://lexio-notification:3010',
-        'lexio-social': 'http://lexio-social:3010'
+        'lexio-social': 'http://lexio-social:3000'
     },
     '1.0': {
         'lexio-authentication': 'http://lexio-authentication:3010',
@@ -16,7 +16,7 @@ var CONFIG = {
         'lexio-game': 'http://lexio-game2:3000',
         'lexio-purchase': 'http://lexio-purchase:3010',
         'lexio-notification': 'http://lexio-notification:3010',
-        'lexio-social': 'http://lexio-social:3010',
+        'lexio-social': 'http://lexio-social:3000',
     }
 };
 function getServiceHost(apiVersion, serviceName) {

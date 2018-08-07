@@ -39,8 +39,9 @@ var lodash_1 = require("lodash");
 var request = require("request");
 var index_1 = require("../index");
 function createError(message, statusCode) {
-    var error = new Error(message);
-    error.statusCode = statusCode;
+    var error = new Error();
+    error.message = message;
+    lodash_1.set(error, 'statusCode', statusCode); // to avoid transpile error
     return error;
 }
 exports.createError = createError;
@@ -70,8 +71,8 @@ exports.getAccessToken = getAccessToken;
  * @param {LexioRequest} req
  * @returns {string}
  */
-function getJwt(req) {
-    var token = (req.headers.Authorization || req.headers.authorization);
+function getAuthorization(req) {
+    var token = getRawAuthorization(req);
     if (token) {
         var split = token.split(' ');
         if (split.length === 2) {
@@ -80,7 +81,16 @@ function getJwt(req) {
     }
     return token;
 }
-exports.getJwt = getJwt;
+exports.getAuthorization = getAuthorization;
+/**
+ *
+ * @param {LexioRequest} req
+ * @returns {string}
+ */
+function getRawAuthorization(req) {
+    return (lodash_1.get(req, 'headers.Authorization') || lodash_1.get(req, 'headers.authorization'));
+}
+exports.getRawAuthorization = getRawAuthorization;
 /**
  * Returns the access_token send by the client
  *
@@ -104,14 +114,17 @@ function requestGet(options) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
+                        console.log('requestGet');
                         return [2 /*return*/, request.get(options, function (error, response, body) {
-                                console.log('requestGet');
                                 console.dir(options, { depth: undefined });
                                 // console.log(error);
                                 // console.log(body);
                                 // console.log(response);
                                 //weird, 401 returns successful with error set to null
-                                if (error || (response && response.statusCode !== 200)) {
+                                if (error || (response && response.statusCode >= 400)) {
+                                    console.log(error);
+                                    console.log(response);
+                                    console.log(body);
                                     var message = lodash_1.get(error, 'message') || response.body.error.message;
                                     console.log(response.statusCode);
                                     console.log(response.statusMessage);
@@ -150,7 +163,8 @@ function requestPost(options) {
                                 // console.log(error);
                                 // console.log(body);
                                 //weird, 401 returns successful with error set to null
-                                if (error || (response && response.statusCode !== 200)) {
+                                if (error || (response && response.statusCode >= 400)) {
+                                    console.log(body);
                                     var message = lodash_1.get(error, 'message') || response.body.error.message;
                                     console.log(response.statusCode);
                                     console.log(response.statusMessage);

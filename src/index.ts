@@ -1,12 +1,23 @@
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
   // import "core-js/fn/array.find"
   // ...
-import { Request } from "express";
 import { getUsers, me } from "./services/user";
-import { postGame } from "./services/game";
+import { getRanking, postGame } from "./services/game";
 import { getServiceHost } from "./serviceRegistry";
 import { authenticate, authenticateViaFacebook } from "./services/authentication";
-import { getAuthenticatedUser } from "./utils/utils";
+import { createError, getAuthenticatedUser } from "./utils/utils";
+import { accessControl } from "./middlewares/accessControl";
+import {
+  IAuthenticate,
+  IFullUser,
+  IGame,
+  IIdentity,
+  IProfile,
+  IRanking,
+  IRankingItem,
+  IUser,
+  LexioRequest
+} from "./interfaces";
 
 export const LATEST_API_VERSION = '1.0';
 
@@ -96,71 +107,20 @@ class Lexio {
       throw e;
     }
   }
+
+  /**
+   *
+   */
+  public async getRanking(language: string, rankingReference: string): Promise<IRanking> {
+    try {
+      return await getRanking(this._originalReq, language, rankingReference);
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 const lexio: Lexio = new Lexio();
 export { lexio };
 
-
-
-
-
-
-
-
-export interface LexioRequest extends Request {
-  user: {
-    accessToken: string;
-  };
-}
-
-export interface LexioError extends Error {
-  statusCode: number;
-}
-
-export interface ApiVersions {
-  [key: string]: IApiServices;
-}
-
-export interface IApiServices {
-  [key: string]: string;
-}
-
-export interface IUser {
-  id: string;
-  username: string;
-  email: string;
-  statistics: object;
-  identities: object;
-  created: string;
-  firebaseToken: string;
-}
-
-export interface IFullUser {
-  id: string;
-  username: string;
-  email: string;
-  balance: number;
-  statistics: object;
-  identities: object;
-  created: string;
-  firebaseToken: string;
-  accessToken: string;
-}
-
-export interface IGame {
-  id?: string;
-  language: string;
-  userId: string;
-  user?: object;
-  score: number;
-  statistics: object;
-  created?: string;
-  serverDate?: string;
-}
-
-export interface IAuthenticate {
-  access_token: string;
-  jwt: string;
-}
-
-export { getServiceHost, getAuthenticatedUser };
+export { IRanking, IRankingItem, IUser, IFullUser, IGame, IAuthenticate, IIdentity, IProfile, LexioRequest};
+export { getServiceHost, getAuthenticatedUser, createError, accessControl };

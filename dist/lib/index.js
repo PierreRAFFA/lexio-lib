@@ -35,13 +35,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
+// import "core-js/fn/array.find"
+// ...
 var user_1 = require("./services/user");
 var game_1 = require("./services/game");
 var serviceRegistry_1 = require("./serviceRegistry");
 exports.getServiceHost = serviceRegistry_1.getServiceHost;
 var authentication_1 = require("./services/authentication");
 var utils_1 = require("./utils/utils");
+exports.createError = utils_1.createError;
 exports.getAuthenticatedUser = utils_1.getAuthenticatedUser;
+var accessControl_1 = require("./middlewares/accessControl");
+exports.accessControl = accessControl_1.accessControl;
 exports.LATEST_API_VERSION = '1.0';
 var Lexio = /** @class */ (function () {
     function Lexio() {
@@ -165,6 +171,26 @@ var Lexio = /** @class */ (function () {
                     case 2:
                         e_5 = _a.sent();
                         throw e_5;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     *
+     */
+    Lexio.prototype.getRanking = function (language, rankingReference) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, game_1.getRanking(this._originalReq, language, rankingReference)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_6 = _a.sent();
+                        throw e_6;
                     case 3: return [2 /*return*/];
                 }
             });

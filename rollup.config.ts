@@ -37,6 +37,7 @@ export default {
           'includes',
           'endsWith',
           'get',
+          'set',
         ],
         'node_modules/request/index.js': [
           'get',
